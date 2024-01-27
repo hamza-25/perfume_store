@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="landing d-flex justify-content-center align-items-center">
+    <div class="text-light text-center ">
+        <h1>Ethereal Aromas</h1>
+        <p>Indulge in the essence of luxury. Elevate your presence with our curated perfumes, where sophistication meets
+            scent.</p>
+        <button type="button" class="btn btn-outline-primary">Get Started</button>
+    </div>
+</div>
+<div class=" d-flex justify-content-center">
+    <div class="search d-flex justify-content-center m-5">
+        <form action="" method="">
+            <select name="categories" class="custom-select" id="">
+                <option selected>category</option>
+                <option value="men">men</option>
+                <option value="women">women</option>
+            </select>
+            <input type="search" placeholder="Search" class="custom-search">
+            <button type="button" class="btn m-1">search</button>
+        </form>
+    </div>
+</div>
+<div class="products container d-flex justify-content-around row m-auto">
+    <!-- cards product 1-->
+    <div class="col-lg-3 col-md-4 col-sm-6 mt-1 mb-5">
+        <div class="card product-card">
+            <img src="/static/images/perfume_1.jpg" class="card-img-top" alt="Product Image" width="100px"
+                height="200px">
+            <div class="card-body">
+                <h5 class="card-title">Product Title</h5>
+                <p class="card-text">Product description goes here. Briefly describe the features and benefits of your
+                    product.</p>
+                <p class="card-text">$19.99</p>
+                <button class="button-55" role="button">Buy Now</button>
+            </div>
+        </div>
+    </div>
+    <!-- cards product 2-->
+    <div class="col-lg-3 col-md-4 col-sm-6 mt-1 mb-5 ">
+        <div class="card product-card">
+            <img src="/static/images/perfume_2.jpg" class="card-img-top" alt="Product Image" width="100px"
+                height="200px">
+            <div class="card-body">
+                <h5 class="card-title">Product Title</h5>
+                <p class="card-text">Product description goes here. Briefly describe the features and benefits of your
+                    product.</p>
+                <p class="card-text">$19.99</p>
+                <button class="button-55" role="button">Buy Now</button>
+            </div>
+        </div>
+    </div>
+    <!-- cards product 3-->
+    <div class="col-lg-3 col-md-4 col-sm-6 mt-1 mb-5 ">
+        <div class="card product-card">
+            <img src="/static/images/perfume_3.jpg" class="card-img-top" alt="Product Image" width="100px"
+                height="200px">
+            <div class="card-body">
+                <h5 class="card-title">Product Title</h5>
+                <p class="card-text">Product description goes here. Briefly describe the features and benefits of your
+                    product.</p>
+                <p class="card-text">$19.99</p>
+                <button class="button-55" role="button">Buy Now</button>
+            </div>
+        </div>
+    </div>
+    <!-- cards product 4-->
+    <div class="col-lg-3 col-md-4 col-sm-6 mt-1 mb-5 ">
+        <div class="card product-card">
+            <img src="/static/images/perfume_3.jpg" class="card-img-top" alt="Product Image" width="100px"
+                height="200px">
+            <div class="card-body">
+                <h5 class="card-title">Product Title</h5>
+                <p class="card-text">Product description goes here. Briefly describe the features and benefits of your
+                    product.</p>
+                <p class="card-text">$19.99</p>
+                <button class="button-55" role="button">Buy Now</button>
+            </div>
+        </div>
+    </div>
+    <!-- cards product 5-->
+    <div class="col-lg-3 col-md-4 col-sm-6 mt-1 mb-5 ">
+        <div class="card product-card">
+            <img src="/static/images/perfume_3.jpg" class="card-img-top" alt="Product Image" width="100px"
+                height="200px">
+            <div class="card-body">
+                <h5 class="card-title">Product Title</h5>
+                <p class="card-text">Product description goes here. Briefly describe the features and benefits of your
+                    product.</p>
+                <p class="card-text">$19.99</p>
+                <button class="button-55" role="button">Buy Now</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
