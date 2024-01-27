@@ -1,22 +1,26 @@
 {% extends 'base.html' %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/single_product.css') }}">
+{% endblock %}
 {% block body %}
-<div class="container m-5 d-flex row m-auto">
-    <div class="m-2 col-lg-5 d-flex justify-content-center align-items-center" style="overflow: auto;">
-        <img src="/static/images/perfume_1.jpg" alt="product photo" width="250px" height="200px">
+<div class="container m-5 d-flex row m-auto mt-5">
+    <div class="m-2 col-lg-5 d-flex justify-content-center align-items-center">
+        <img src="/static/images/perfume_1.jpg" alt="product photo" width="250px" height="300px">
     </div>
     <div class="m-1 col-lg-5">
         <h2>Product title</h2>
         <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptas nihil similique qui odio praesentium
             nesciunt autem nobis veritatis assumenda aspernatur.
         </p>
-        <input type="number" min="1" placeholder="1">
-        <h4>price: 19$</h4>
-        <button class="button-55" role="button">Buy Now</button>
+        <input type="number" min="1" placeholder="1" class="mt-1">
+        <h4 class="mt-1">price: 19$</h4>
+        <button class="button-55 mt-4" role="button">Buy Now</button>
     </div>
     <hr class="mt-5">
 </div>
 <div class="container">
-    <h3>Description</h3>
+    <h3 class="text-center">Description</h3>
+    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facilis cumque magni a sed commodi quisquam molestiae quod neque, earum provident modi incidunt harum in id esse doloribus quae corporis. Quae voluptatibus tempora ratione fuga facilis praesentium alias quis unde, quisquam ipsa architecto ipsum delectus veniam ducimus vel maxime odio! Earum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti distinctio reiciendis sapiente sint rerum mollitia itaque fugiat dicta excepturi, voluptas, atque ipsa voluptates minus nobis consequatur blanditiis iste at consectetur iusto doloremque explicabo. Temporibus quos quia tempora, ab, provident repudiandae velit exercitationem deserunt officia atque nisi, doloribus consectetur id nemo? Blanditiis distinctio adipisci veniam, repellendus eum earum autem consectetur fugit eaque, itaque sit beatae! At necessitatibus aperiam debitis quasi quam temporibus velit deserunt, vel atque, totam et impedit numquam ducimus praesentium possimus molestiae iste voluptatem autem, odit eveniet sunt sint exercitationem? Aut, dolorum. Fugiat consequuntur ab repellat laboriosam neque alias exercitationem tempora temporibus, vel quibusdam quisquam nostrum quod, minima distinctio. Mollitia placeat asperiores doloremque totam sed ullam error cupiditate. Distinctio voluptate ducimus laborum minus suscipit ratione sequi saepe at optio eum fuga aliquam laudantium placeat vitae numquam ipsum, architecto neque, nulla facere ipsa, ad hic earum dicta. Pariatur nihil, officiis, neque vero ab deleniti quos dolore nesciunt velit libero omnis veniam, a nam eveniet. Odio ipsa nam, rem, fuga libero reprehenderit voluptatibus sapiente enim dolorem ratione porro officiis laboriosam voluptas optio aliquam. Consequuntur ratione laudantium, aperiam dolor, reprehenderit vitae tempore molestias pariatur quibusdam ipsa quo adipisci similique accusantium ad nam deserunt doloremque. Iste dolor voluptatem eaque natus quos alias, quibusdam debitis, magni totam dignissimos, nobis labore adipisci facilis obcaecati numquam incidunt ratione quisquam officiis perspiciatis. Esse optio mollitia impedit cum magnam veniam voluptate, asperiores aliquid dolorum autem eos libero nam rem quos facere placeat natus. Pariatur quod delectus est officia itaque quae placeat recusandae blanditiis cum, non ut atque laborum architecto, distinctio excepturi nam dignissimos! Unde placeat sapiente doloremque, laudantium pariatur vero natus voluptatem iusto ducimus illum delectus aut necessitatibus voluptate sint corporis cupiditate, nulla quasi facere nesciunt assumenda itaque hic. Nemo vel maiores consequuntur ullam at quia doloremque eaque!</p>
 </div>
 
 {% endblock %}
