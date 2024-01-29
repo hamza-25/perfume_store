@@ -103,3 +103,16 @@ body{
 .button-55:focus {
   box-shadow: rgba(0, 0, 0, .3) 2px 8px 4px -6px;
 }
+address {
+    font-style: italic;
+    border: 1px solid black;
+    padding: 10px;
+    margin: 10px;
+}
+/* footer is hide for now */
+footer{
+    display: none;
+}
+button{
+    margin: 5px;
+}

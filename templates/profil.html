@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% block head %}
+{% endblock %}
+{% block body %}
+<div class="container ">
+    <div class="d-flex justify-content-center align-items-center">
+        <img src="/static/images/user-photo.jpg" alt="user photo" class="d-inline">
+    </div>
+
+    <h2 class="text-center">Personel info:</h2>
+    <div class="d-flex justify-content-center align-items-center">
+        <form action="" method="" class="col-lg-8 col-md-12">
+            <div class="form-group">
+                <label for="first-name">first name</label>
+                <input type="text" name="first-name" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="last-name">last name</label>
+                <input type="text" name="last-name" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="email">email</label>
+                <input type="text" name="email" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="phone">phone</label>
+                <input type="text" name="phone" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="age">age</label>
+                <input type="text" name="age" class="form-control">
+            </div>
+            <div class="d-flex justify-content-center align-items-center">
+                <button type="submit" class="btn btn-primary col-sm-10 mt-2 mb-5">Update</button>
+
+            </div>
+        </form>
+    </div>
+    <!-- <h2 class="">Addresses</h2> -->
+    <div class="d-flex justify-content-center align-items-center">
+        <div class="address d-flex justify-content-around row m-auto ">
+            <address class="col-lg-5 col-md-6 col-sm-12 mt-1 mb-5">
+                <p>full name: Lorem ipsum dolor sit.</p>
+                <p>country: Lorem ipsum dolor sit.</p>
+                <p>province: Lorem ipsum dolor sit.</p>
+                <p>city: Lorem ipsum dolor sit.</p>
+                <p>zip-code: Lorem ipsum dolor sit.</p>
+                <p>address: Lorem ipsum dolor sit.</p>
+                <p>phone: Lorem ipsum dolor sit.</p>
+                <button type="button" class="btn btn-info">edit</button>
+                <button type="button" class="btn btn-danger">delete</button>
+            </address>
+            <address class="col-lg-5 col-md-6 col-sm-12 mt-1 mb-5">
+                <!-- <address class="col-lg-3 col-md-4 col-sm-6 mt-1 mb-5"> -->
+                <p>full name: Lorem ipsum dolor sit.</p>
+                <p>country: Lorem ipsum dolor sit.</p>
+                <p>province: Lorem ipsum dolor sit.</p>
+                <p>city: Lorem ipsum dolor sit.</p>
+                <p>zip-code: Lorem ipsum dolor sit.</p>
+                <p>address: Lorem ipsum dolor sit.</p>
+                <p>phone: Lorem ipsum dolor sit.</p>
+                <button type="button" class="btn btn-info">edit</button>
+                <button type="button" class="btn btn-danger">delete</button>
+            </address>
+            <address class="col-lg-5 col-md-6 col-sm-12 mt-1 mb-5">
+                <p>full name: Lorem ipsum dolor sit.</p>
+                <p>country: Lorem ipsum dolor sit.</p>
+                <p>province: Lorem ipsum dolor sit.</p>
+                <p>city: Lorem ipsum dolor sit.</p>
+                <p>zip-code: Lorem ipsum dolor sit.</p>
+                <p>address: Lorem ipsum dolor sit.</p>
+                <p>phone: Lorem ipsum dolor sit.</p>
+                <button type="button" class="btn btn-info">edit</button>
+                <button type="button" class="btn btn-danger">delete</button>
+            </address>
+            <button type="button" class="btn btn-primary col-sm-10">add address</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
