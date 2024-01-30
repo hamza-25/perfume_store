@@ -1,18 +1,26 @@
 from flask import Flask, render_template
 from db_info import USER, PASSWORD, DATABASE_NAME
 from flask_sqlalchemy import SQLAlchemy
-from models import User, Address, Category, Order, Product
+# from models import User, Address, Category, Order, Product
+# from models import Category
+from flask_migrate import Migrate
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 
 
 app = Flask(__name__)
-# be attention connector is it installed
-# app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{USER}:{PASSWORD}@localhost/{DATABASE_NAME}'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@localhost/perfume_db'
 db = SQLAlchemy(app)
-
+migrate = Migrate(app, db)
 
 @app.route('/')
 def home():
+    # engine = create_engine("mysql+pymysql://root:@localhost/perfume_db")
+    # Session = sessionmaker(bind=engine)
+    # session = Session()
+    # from models import Product
+    # all_products = Product.query.all()
+    # return all_products
     return render_template('index.html', title='Home Page')
 
 @app.route('/product/<int:id>')
@@ -23,8 +31,10 @@ def single_product(id):
 def profil():
     return render_template('profil.html', title='profil')
 
+
 if __name__ == '__main__':
-    with app.app_context():
-        from models import User, Address, Category, Order, Product
-        db.create_all()
     app.run(debug=True)
+    
+# its important that because when we run the migration will detect our models
+from models import User, Address, Category, Order, Product
+

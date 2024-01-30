@@ -6,10 +6,10 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(20), nullable=False)
     last_name = db.Column(db.String(20), nullable=False)
-    password = db.Column(db.String, nullable=False)
-    confirm_password = db.Column(db.String, nullable=False)
-    email = db.Column(db.String, unique=True, nullable=False)  # Assuming you're using a regular string for email
-    email_verification = db.Column(db.String, nullable=True)
+    password = db.Column(db.String(30), nullable=False)
+    confirm_password = db.Column(db.String(30), nullable=False)
+    email = db.Column(db.String(30), unique=True, nullable=False)  # Assuming you're using a regular string for email
+    email_verification = db.Column(db.String(30), nullable=True)
     created_at = db.Column(db.DateTime)
     updated_at = db.Column(db.DateTime)
     addresses = relationship('Address', backref('user'))
