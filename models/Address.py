@@ -2,7 +2,7 @@ from app import db
 from sqlalchemy.orm import relationship, backref 
 
 class Address(db.Model):
-    __tablename__ = 'addresses'
+    # __tablename__ = 'addresses'
     id = db.Column(db.Integer, primary_key=True)
     country = db.Column(db.String(30), nullable=False)
     state = db.Column(db.String(30), nullable=False)
@@ -11,7 +11,11 @@ class Address(db.Model):
     street = db.Column(db.String(30), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     user = relationship('User', backref('addresses'))
-
     
-    
-    
+    def __init__(self, country, state, city, zip, street, user_id):
+        self.country = country
+        self.state = state
+        self.city = city
+        self.zip = zip
+        self.street = street
+        self.user_id = user_id

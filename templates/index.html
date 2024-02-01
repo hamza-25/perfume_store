@@ -21,22 +21,24 @@
         </form>
     </div>
 </div>
+{{ ph }}
 <div class="products container d-flex justify-content-around row m-auto">
     <!-- cards product 1-->
+    {% for product in pr %}
     <div class="col-lg-3 col-md-4 col-sm-6 mt-1 mb-5">
         <div class="card product-card">
             <img src="/static/images/perfume_1.jpg" class="card-img-top" alt="Product Image" width="100px"
                 height="200px">
             <div class="card-body">
-                <h5 class="card-title">Product Title</h5>
-                <p class="card-text">Product description goes here. Briefly describe the features and benefits of your
-                    product.</p>
-                <p class="card-text">$19.99</p>
+                <h5 class="card-title">{{ product.title }}</h5>
+                <p class="card-text">{{ product.description }}</p>
+                <p class="card-text">${{ product.price }}</p>
                 <button class="button-55" role="button">Buy Now</button>
                 <button class="button-55 col-md-6" role="button">Add to Cart</button>
             </div>
         </div>
     </div>
+    {% endfor %}
     <!-- cards product 2-->
     <div class="col-lg-3 col-md-4 col-sm-6 mt-1 mb-5 ">
         <div class="card product-card">

@@ -15,6 +15,15 @@ class User(db.Model):
     addresses = relationship('Address', backref('user'))
     orders = relationship('Order', backref('user'))
 
+    def __init__(self, first_name, last_name, password, confirm_password, email, email_verification, created_at, updated_at):
+        self.first_name = first_name
+        self.last_name = last_name
+        self.password = password
+        self.confirm_password = confirm_password
+        self.email = email
+        self.email_verification = email_verification
+        self.created_at = created_at
+        self.updated_at = updated_at
     
     
     

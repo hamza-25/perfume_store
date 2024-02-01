@@ -6,3 +6,6 @@ class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(30), unique=True, nullable=False)
     products = relationship('Product', backref('category'))
+    
+    def __init__(self, name):
+        self.name = name

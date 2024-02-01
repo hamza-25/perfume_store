@@ -12,4 +12,10 @@ class Product(db.Model):
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'), nullable=False)
     category = relationship('Category', backref('products'))
     
-    
+    def __init__(self, title, description, price, discount_price, quantity, category_id):
+        self.title = title
+        self.description = description
+        self.price = price
+        self.discount_price = discount_price
+        self.quantity = quantity
+        self.category_id = category_id

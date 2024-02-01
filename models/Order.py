@@ -12,3 +12,12 @@ class Order(db.Model):
     payement_method = db.Column(db.String(30), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     user = relationship('User', backref('orders'))
+    
+    def __init__(self, transaction, total_price, products_id, order_status, ordered_at, payement_method, user_id):
+        self.transaction = transaction
+        self.total_price = total_price
+        self.products_id = products_id
+        self.order_status = order_status
+        self.ordered_at = ordered_at
+        self.payement_method = payement_method
+        self.user_id = user_id
