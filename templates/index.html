@@ -37,7 +37,7 @@
             <img src="/static/images/perfume_1.jpg" class="card-img-top" alt="Product Image" width="100px"
                 height="200px">
             <div class="card-body">
-                <h5 class="card-title">{{ product.title }}</h5>
+                <a href="/product/{{ product.id }}" style="text-decoration: none;color: black;"><h5 class="card-title">{{ product.title }}</h5></a>
                 <p class="card-text">{{ product.description }}</p>
                 <p class="card-text">${{ product.price }}</p>
                 <button class="button-55" role="button">Buy Now</button>
@@ -106,7 +106,6 @@
                 <p class="card-text">$19.99</p>
                 <button class="button-55" role="button">Buy Now</button>
                 <button class="button-55 col-md-6" role="button">Add to Cart</button>
-
             </div>
         </div>
     </div>

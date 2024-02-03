@@ -12,15 +12,15 @@
         <form action="" method="" class="col-lg-8 col-md-12">
             <div class="form-group">
                 <label for="first-name">first name</label>
-                <input type="text" name="first-name" class="form-control">
+                <input type="text" name="first-name" class="form-control" value="{{ user.first_name }}">
             </div>
             <div class="form-group">
                 <label for="last-name">last name</label>
-                <input type="text" name="last-name" class="form-control">
+                <input type="text" name="last-name" class="form-control" value="{{ user.last_name }}">
             </div>
             <div class="form-group">
                 <label for="email">email</label>
-                <input type="text" name="email" class="form-control">
+                <input type="text" name="email" class="form-control" value="{{ user.email }}">
             </div>
             <div class="form-group">
                 <label for="phone">phone</label>
@@ -39,7 +39,20 @@
     <!-- <h2 class="">Addresses</h2> -->
     <div class="d-flex justify-content-center align-items-center">
         <div class="address d-flex justify-content-around row m-auto ">
+            {% for address in user.addresses %}
             <address class="col-lg-5 col-md-6 col-sm-12 mt-1 mb-5">
+                <input type="text" hidden value="{{ address.id }}">
+                <p>full name: {{ user.first_name }} {{ user.last_name }}</p>
+                <p>country: {{ address.country }}</p>
+                <p>province: {{ address.state }}</p>
+                <p>city: {{ address.city }}</p>
+                <p>zip-code: {{ address.zip }}</p>
+                <p>address: {{ address.street }}</p>
+                <button type="button" class="btn btn-info">edit</button>
+                <button type="button" class="btn btn-danger">delete</button>
+            </address>
+            {% endfor %}
+            <!-- <address class="col-lg-5 col-md-6 col-sm-12 mt-1 mb-5">
                 <p>full name: Lorem ipsum dolor sit.</p>
                 <p>country: Lorem ipsum dolor sit.</p>
                 <p>province: Lorem ipsum dolor sit.</p>
@@ -51,7 +64,6 @@
                 <button type="button" class="btn btn-danger">delete</button>
             </address>
             <address class="col-lg-5 col-md-6 col-sm-12 mt-1 mb-5">
-                <!-- <address class="col-lg-3 col-md-4 col-sm-6 mt-1 mb-5"> -->
                 <p>full name: Lorem ipsum dolor sit.</p>
                 <p>country: Lorem ipsum dolor sit.</p>
                 <p>province: Lorem ipsum dolor sit.</p>
@@ -61,18 +73,7 @@
                 <p>phone: Lorem ipsum dolor sit.</p>
                 <button type="button" class="btn btn-info">edit</button>
                 <button type="button" class="btn btn-danger">delete</button>
-            </address>
-            <address class="col-lg-5 col-md-6 col-sm-12 mt-1 mb-5">
-                <p>full name: Lorem ipsum dolor sit.</p>
-                <p>country: Lorem ipsum dolor sit.</p>
-                <p>province: Lorem ipsum dolor sit.</p>
-                <p>city: Lorem ipsum dolor sit.</p>
-                <p>zip-code: Lorem ipsum dolor sit.</p>
-                <p>address: Lorem ipsum dolor sit.</p>
-                <p>phone: Lorem ipsum dolor sit.</p>
-                <button type="button" class="btn btn-info">edit</button>
-                <button type="button" class="btn btn-danger">delete</button>
-            </address>
+            </address> -->
             <button type="button" class="btn btn-primary col-sm-10">add address</button>
         </div>
     </div>

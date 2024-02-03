@@ -1,9 +1,9 @@
 $(document).ready(function (){
-    const price  = parseInt($('.price').text());
+    const price  = parseFloat($('.price').text());
     $('.qty').on('click', function(){
-        const qty = parseInt($(this).val());
-        if (qty != 0){
-            $('.price').text(qty * price);
+        const qty = parseFloat($(this).val());
+        if (!isNaN(qty) && qty != 0){
+            $('.price').text((qty * price).toFixed(2));
         }
         
     })
