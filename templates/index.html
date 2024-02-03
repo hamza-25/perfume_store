@@ -21,9 +21,16 @@
         </form>
     </div>
 </div>
-{{ ph }}
 <div class="products container d-flex justify-content-around row m-auto">
     <!-- cards product 1-->
+    <!-- {% for category in categories %}
+       {%  for p in category.products %}
+            {{ p.title }}
+       {% endfor %}
+    {% endfor %} -->
+    <!-- {% for product in pr %}
+        {{ product.title }} - {{ product.category.name }}
+    {% endfor %} -->
     {% for product in pr %}
     <div class="col-lg-3 col-md-4 col-sm-6 mt-1 mb-5">
         <div class="card product-card">

@@ -1,5 +1,4 @@
 from app import db
-from sqlalchemy.orm import relationship, backref
 
 class Product(db.Model):
     __tablename__ = 'products'
@@ -10,12 +9,12 @@ class Product(db.Model):
     discount_price = db.Column(db.Float)
     quantity = db.Column(db.Integer, nullable=False)
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'), nullable=False)
-    category = relationship('Category', backref('products'))
+    category = db.relationship('Category', backref=db.backref('products_ref', lazy=True))
     
-    def __init__(self, title, description, price, discount_price, quantity, category_id):
-        self.title = title
-        self.description = description
-        self.price = price
-        self.discount_price = discount_price
-        self.quantity = quantity
-        self.category_id = category_id
+    # def __init__(self, title, description, price, discount_price, quantity, category_id):
+    #     self.title = title
+    #     self.description = description
+    #     self.price = price
+    #     self.discount_price = discount_price
+    #     self.quantity = quantity
+    #     self.category_id = category_id
