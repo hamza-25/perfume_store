@@ -18,20 +18,28 @@
 <body>
     <nav class="navbar">
         <div class="container-fluid align-items-around ">
-            <a class="navbar-brand col-6" href="#">
+            <a class="navbar-brand col-6" href="{{ url_for('home') }}">
                 <img src="static/images/logo_2.jpg" alt="" width="30" height="24" class="d-inline-block align-text-top">
             </a>
 
             {% if current_user.is_authenticated %}
-            <p>Username: {{ current_user.first_name }}</p>
-            <a href="{{ url_for('logout') }}">logout</a>
-            <a href="/profil/{{ current_user.id }}">profil</a>
+            <div class="hover-container">
+                {{ current_user.first_name }}
+                <div class="hover-content">
+                  <button onclick="viewProfile()">
+                    <a href="/profil/{{ current_user.id }}" >profil</a>
+                  </button>
+                  <button onclick="logout()">
+                    <a href="{{ url_for('logout') }}" >logout</a>
+                  </button>
+                </div>
+              </div>
             <!-- Additional user details -->
             {% else %}
-            <button type="button" class="btn"><a href="{{ url_for('login') }}">Login</a></button>
-
+            <button type="button" class="btn">
+                <a href="{{ url_for('login') }}">Login</a>
+            </button>
             {% endif %}
-
         </div>
     </nav>
     {% block body %}

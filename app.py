@@ -15,7 +15,7 @@ from datetime import datetime
 
 login_manager = LoginManager()
 login_manager.init_app(app)
-# login_manager.login_view = 'login'
+login_manager.login_view = 'login'
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -45,6 +45,8 @@ def profil(id):
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
     if request.method == 'POST':
         fname = request.form['first_name']
         lname = request.form['last_name']
@@ -59,8 +61,7 @@ def register():
         db.session.add(new_user)
         db.session.commit()
         login_user(new_user)
-        return render_template("test.html")
-        # return redirect(url_for('home'))
+        return redirect(url_for('home'))
     return render_template('register.html', title="register page")
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -69,22 +70,14 @@ def login():
         email = request.form['email']
         password = request.form['password']
         from models.User import User
-
-        # user = User.query.filter_by(email=email).first()  # Query the user from the database by username
-        user = db.session.query(User).filter_by(email=email).first() # Query the user from the database by username
-
-
-        # if user and check_password_hash(user.password, password):  # Check if the user exists and the password is correct
-        #     login_user(user)  # Log in the user using Flask-Login
-        #     return redirect(url_for('home'))  # Redirect to the home page after successful login
-        if user: # Check if the user exists and the password is correct
+        user = db.session.query(User).filter_by(email=email).first()
+        if user: 
             if password == user.password:
                 login_user(user) 
                 return redirect(url_for('home')) 
             else:
-                return 'Invalid username or password'  # Display error message for invalid credentials
-
-    return render_template('login.html')  # Render the login form
+                return 'Invalid username or password'  
+    return render_template('login.html')
 
 @app.route("/logout")
 @login_required

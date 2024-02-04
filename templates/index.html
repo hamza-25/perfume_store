@@ -22,15 +22,6 @@
     </div>
 </div>
 <div class="products container d-flex justify-content-around row m-auto">
-    <!-- cards product 1-->
-    <!-- {% for category in categories %}
-       {%  for p in category.products %}
-            {{ p.title }}
-       {% endfor %}
-    {% endfor %} -->
-    <!-- {% for product in pr %}
-        {{ product.title }} - {{ product.category.name }}
-    {% endfor %} -->
     {% for product in pr %}
     <div class="col-lg-3 col-md-4 col-sm-6 mt-1 mb-5">
         <div class="card product-card">
@@ -46,68 +37,5 @@
         </div>
     </div>
     {% endfor %}
-    <!-- cards product 2-->
-    <div class="col-lg-3 col-md-4 col-sm-6 mt-1 mb-5 ">
-        <div class="card product-card">
-            <img src="/static/images/perfume_2.jpg" class="card-img-top" alt="Product Image" width="100px"
-                height="200px">
-            <div class="card-body">
-                <h5 class="card-title">Product Title</h5>
-                <p class="card-text">Product description goes here. Briefly describe the features and benefits of your
-                    product.</p>
-                <p class="card-text">$19.99</p>
-                <button class="button-55" role="button">Buy Now</button>
-                <button class="button-55 col-md-6" role="button">Add to Cart</button>
-                
-            </div>
-        </div>
-    </div>
-    <!-- cards product 3-->
-    <div class="col-lg-3 col-md-4 col-sm-6 mt-1 mb-5 ">
-        <div class="card product-card">
-            <img src="/static/images/perfume_3.jpg" class="card-img-top" alt="Product Image" width="100px"
-                height="200px">
-            <div class="card-body">
-                <h5 class="card-title">Product Title</h5>
-                <p class="card-text">Product description goes here. Briefly describe the features and benefits of your
-                    product.</p>
-                <p class="card-text">$19.99</p>
-                <button class="button-55" role="button">Buy Now</button>
-                <button class="button-55 col-md-6" role="button">Add to Cart</button>
-
-            </div>
-        </div>
-    </div>
-    <!-- cards product 4-->
-    <div class="col-lg-3 col-md-4 col-sm-6 mt-1 mb-5 ">
-        <div class="card product-card">
-            <img src="/static/images/perfume_3.jpg" class="card-img-top" alt="Product Image" width="100px"
-                height="200px">
-            <div class="card-body">
-                <h5 class="card-title">Product Title</h5>
-                <p class="card-text">Product description goes here. Briefly describe the features and benefits of your
-                    product.</p>
-                <p class="card-text">$19.99</p>
-                <button class="button-55" role="button">Buy Now</button>
-                <button class="button-55 col-md-6" role="button">Add to Cart</button>
-
-            </div>
-        </div>
-    </div>
-    <!-- cards product 5-->
-    <div class="col-lg-3 col-md-4 col-sm-6 mt-1 mb-5 ">
-        <div class="card product-card">
-            <img src="/static/images/perfume_3.jpg" class="card-img-top" alt="Product Image" width="100px"
-                height="200px">
-            <div class="card-body">
-                <h5 class="card-title">Product Title</h5>
-                <p class="card-text">Product description goes here. Briefly describe the features and benefits of your
-                    product.</p>
-                <p class="card-text">$19.99</p>
-                <button class="button-55" role="button">Buy Now</button>
-                <button class="button-55 col-md-6" role="button">Add to Cart</button>
-            </div>
-        </div>
-    </div>
 </div>
 {% endblock %}
