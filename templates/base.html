@@ -16,7 +16,7 @@
 </head>
 
 <body>
-    <nav class="navbar">
+    <nav class="navbar bg-dark text-light">
         <div class="container-fluid align-items-around ">
             <a class="navbar-brand col-6" href="{{ url_for('home') }}">
                 <img src="static/images/logo_2.jpg" alt="" width="30" height="24" class="d-inline-block align-text-top">
@@ -25,6 +25,9 @@
             {% if current_user.is_authenticated %}
             <div class="hover-container">
                 {{ current_user.first_name }}
+                {% if admin %}
+                    <span>Dashboard</span>
+                {% endif %}
                 <div class="hover-content">
                   <button onclick="viewProfile()">
                     <a href="/profil/{{ current_user.id }}" >profil</a>

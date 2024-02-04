@@ -1,4 +1,5 @@
 from app import db
+from sqlalchemy.dialects.mysql import JSON
 
 class Order(db.Model):
     __tablename__ = 'orders'
@@ -6,6 +7,7 @@ class Order(db.Model):
     transaction = db.Column(db.String(30), nullable=False)
     total_price = db.Column(db.Float, nullable=False)
     products_id = db.Column(db.String(128), nullable=False)
+    # products_id = db.Column(JSON)
     order_status = db.Column(db.String(30), nullable=False)
     ordered_at = db.Column(db.DateTime, nullable=False)
     payement_method = db.Column(db.String(30), nullable=False)

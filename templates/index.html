@@ -13,8 +13,9 @@
         <form action="" method="">
             <select name="categories" class="custom-select" id="">
                 <option selected>category</option>
-                <option value="men">men</option>
-                <option value="women">women</option>
+                {% for category in categories %}
+                <option value="{{ category.name }}">{{ category.name }}</option>
+                {% endfor %}
             </select>
             <input type="search" placeholder="Search" class="custom-search">
             <button type="button" class="btn m-1">search</button>

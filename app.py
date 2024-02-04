@@ -22,13 +22,26 @@ def load_user(user_id):
     from models.User import User
     return db.session.query(User).filter_by(id=user_id).first()
 
+def is_admin():
+    if current_user.is_authenticated:
+        from models.User import User
+        user = db.session.query(User).filter_by(id=current_user.id, is_admin=True).first()
+        if not user:
+            return False
+        return True
+    else:
+        False
+    
+        
+
 @app.route('/')
 def home():
     from models.Category import Category
     from models.Product import Product
     pr = get_all(Product, db)
     categories = get_all(Category, db)
-    return render_template('index.html', title='Home Page', pr=pr, categories=categories)
+    admin = is_admin()
+    return render_template('index.html', title='Home Page', pr=pr, categories=categories, admin=admin)
 
 @app.route('/product/<int:id>')
 def single_product(id):
@@ -85,6 +98,45 @@ def logout():
     logout_user()
     return redirect(url_for('home'))
 
+@app.route("/admin")
+@login_required
+def home_admin():
+    if not is_admin():
+        return 'access denied'
+    return render_template('admin/base_admin.html', title='admin page')
+
+@app.route("/admin/category", methods=['GET', 'POST'])
+@login_required
+def category():
+    if not is_admin():
+        return 'access denied'
+    if request.method == 'POST':
+        pass
+    from models.Category import Category
+    categories = db.session.query(Category).all()
+    return render_template('admin/category.html', categories=categories, title='category page')
+
+@app.route("/admin/product", methods=['GET', 'POST'])
+@login_required
+def product():
+    if not is_admin():
+        return 'access denied'
+    if request.method == 'POST':
+        pass
+    from models.Product import Product
+    products = db.session.query(Product).all()
+    return render_template('admin/product.html', products=products, title="product page")
+
+@app.route("/admin/order", methods=['GET', 'POST'])
+@login_required
+def order():
+    if not is_admin():
+        return 'access denied'
+    if request.method == 'POST':
+        pass
+    from models.Order import Order
+    orders = db.session.query(Order).all()
+    return render_template('admin/order.html', orders=orders, title='order page')
 
 if __name__ == '__main__':
     app.run(debug=True)
