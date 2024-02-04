@@ -22,7 +22,15 @@
                 <img src="static/images/logo_2.jpg" alt="" width="30" height="24" class="d-inline-block align-text-top">
             </a>
 
-            <button type="button" class="btn">Login</button>
+            {% if current_user.is_authenticated %}
+            <p>Username: {{ current_user.first_name }}</p>
+            <a href="{{ url_for('logout') }}">logout</a>
+            <a href="/profil/{{ current_user.id }}">profil</a>
+            <!-- Additional user details -->
+            {% else %}
+            <button type="button" class="btn"><a href="{{ url_for('login') }}">Login</a></button>
+
+            {% endif %}
 
         </div>
     </nav>
