@@ -149,6 +149,8 @@ def user():
     from models.User import User
     users = db.session.query(User).filter_by(is_admin=None).all()
     return render_template('admin/user.html', users=users, title='users page')
+
+
 @app.route('/user_orders')
 @login_required
 def user_orders():
@@ -156,6 +158,48 @@ def user_orders():
     id = current_user.id
     orders = db.session.query(Order).filter_by(user_id=id).all()
     return render_template('orders.html', title='orders', orders=orders)
+
+@app.route('/checkout', methods=['POST'])
+@login_required
+def checkout():
+    if request.method == 'POST':
+        quantity = request.form['quantity']
+        if int(quantity) == 0:
+            return redirect(url_for('home'))
+        product_id = request.form['product_id']
+        from models.Product import Product
+        product = db.session.query(Product).filter_by(id=product_id).first()
+        total = float(quantity) * float(product.price)
+        return render_template('checkout_page.html', title="checkout page", total=total, product_id=product_id)
+        
+        
+@app.route('/confirm_checkout', methods=['POST'])
+@login_required
+def confirm_checkout():
+    if request.method == 'POST':
+        street = request.form['street']
+        country = request.form['country']
+        state = request.form['state']
+        city = request.form['city']
+        zip = request.form['zip']
+        user_id = current_user.id
+        total = float(request.form['total'])
+        product_id = int(request.form['product_id'])
+        from models.Address import Address
+        from models.Order import Order
+        from datetime import datetime
+        from random import randint
+        transaction = f'{user_id}DFGF{randint(0, 10000)}'
+        
+        new_address = Address(user_id=user_id, city=city, zip=zip, state=state, country=country, street=street)
+        new_order = Order(user_id=user_id, transaction=transaction, total_price=total, products_id=product_id, order_status='placed', ordered_at=datetime.now(), payement_method='Credit Card')
+        db.session.add(new_address)
+        db.session.add(new_order)
+        db.session.commit()
+        return redirect(url_for('user_orders'))
+    return redirect(url_for('home'))
+    
+        
 
 if __name__ == '__main__':
     app.run(debug=True)

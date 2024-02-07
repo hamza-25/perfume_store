@@ -13,11 +13,17 @@
             nesciunt autem nobis veritatis assumenda aspernatur.
         </p> -->
         <p>qty: {{ product.quantity }}</p>
-        <input type="number" min="1" placeholder="1" class="mt-1 qty">
+        <form action="/checkout" method="post">
+        <input type="number" min="1" placeholder="1" class="mt-1 qty" name="quantity">
+        <input type="text" name="product_id" value="{{ product.id }}" hidden>
         <h4 class="mt-1">price: <span class="price">{{ product.price }}</span>$</h4>
         <!-- <input type="radio" name="payement"> Cash on Delevry <br>
         <input type="radio"name="payement"> Master Card , Visa <br> -->
-        <button class="button-55 mt-4" role="button">Buy Now</button>
+        <button class="button-55 mt-4" role="button">
+            Buy Now
+        </button>
+    </form>
+        </div>
     </div>
     <hr class="mt-5">
 </div>
