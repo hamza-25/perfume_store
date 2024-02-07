@@ -47,7 +47,8 @@ def home():
 def single_product(id):
     from models.Product import Product
     product = get_product_by_id(Product, db, int(id))
-    return render_template('single_product_page.html', title='product', product=product)
+    admin = is_admin()
+    return render_template('single_product_page.html', admin=admin, title='product', product=product)
 
 @app.route('/profil/<int:id>')
 @login_required
@@ -137,6 +138,24 @@ def order():
     from models.Order import Order
     orders = db.session.query(Order).all()
     return render_template('admin/order.html', orders=orders, title='order page')
+
+@app.route("/admin/user", methods=['GET', 'POST'])
+@login_required
+def user():
+    if not is_admin():
+        return 'access denied'
+    if request.method == 'POST':
+        pass
+    from models.User import User
+    users = db.session.query(User).filter_by(is_admin=None).all()
+    return render_template('admin/user.html', users=users, title='users page')
+@app.route('/user_orders')
+@login_required
+def user_orders():
+    from models.Order import Order
+    id = current_user.id
+    orders = db.session.query(Order).filter_by(user_id=id).all()
+    return render_template('orders.html', title='orders', orders=orders)
 
 if __name__ == '__main__':
     app.run(debug=True)

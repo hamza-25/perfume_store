@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="container">
+    <table class="table m-2">
+        <thead>
+            <tr>
+                <th scope="col">transaction</th>
+                <th scope="col">total price $</th>
+                <th scope="col">products id</th>
+                <th scope="col">order status</th>
+                <th scope="col">ordered at</th>
+                <th scope="col">payment method</th>
+                <th scope="col">action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td>{{ order.transaction }}</td>
+                <td>{{ order.total_price }}</td>
+                <td>{{ order.products_id }}</td>
+                <td>{{ order.order_status }}</td>
+                <td>{{ order.ordered_at }}</td>
+                <td>{{ order.payement_method }}</td>
+                <td>
+                    <button class="btn btn-danger">
+                        <a href="">Cancel</a>
+                    </button>
+                    <button class="btn btn-info">
+                        <a href="">confirm delivery</a>
+                    </button>
+                </td>
+            </tr>
+            {% endfor %}
+
+        </tbody>
+    </table>
+</div>
+{% endblock %}

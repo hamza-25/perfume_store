@@ -13,14 +13,18 @@
             </div>
             <div class="m-2">
                 <a href="{{ url_for('product') }}">Products</a>
-                </div>
+            </div>
             <div class="m-2">
                 <a href="{{ url_for('order') }}">Orders</a>
-                </div>
+            </div>
+            <div class="m-2">
+                <a href="{{ url_for('user') }}">Users</a>
+            </div>
         </div>
         <!-- Content Area -->
         <div class="col-md-9">
             <!-- Add your content here -->
+                <h1 class="text-center">Admin Panel</h1>
             {% block content %}
             {% endblock %}
 

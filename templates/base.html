@@ -21,13 +21,19 @@
             <a class="navbar-brand col-6" href="{{ url_for('home') }}">
                 <img src="static/images/logo_2.jpg" alt="" width="30" height="24" class="d-inline-block align-text-top">
             </a>
-
             {% if current_user.is_authenticated %}
-            <div class="hover-container">
-                {{ current_user.first_name }}
+            <div>
                 {% if admin %}
-                    <span>Dashboard</span>
+                <a href="{{ url_for('home_admin') }}">Dashboard</a>
                 {% endif %}
+                {% if not admin %}
+                <a href="{{ url_for('user_orders') }}">Orders</a>
+                {% endif %}
+              
+            </div>
+            <div class="hover-container">
+                
+                {{ current_user.first_name }}
                 <div class="hover-content">
                   <button onclick="viewProfile()">
                     <a href="/profil/{{ current_user.id }}" >profil</a>
