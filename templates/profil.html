@@ -48,8 +48,12 @@
                 <p>city: {{ address.city }}</p>
                 <p>zip-code: {{ address.zip }}</p>
                 <p>address: {{ address.street }}</p>
-                <button type="button" class="btn btn-info">edit</button>
-                <button type="button" class="btn btn-danger">delete</button>
+                <button type="button" class="btn btn-info">
+                    <a href="/edit/address/{{ address.id }}">edit</a>
+                </button>
+                <button type="button" class="btn btn-danger">
+                    <a href="/delete/address/{{ address.id }}">delete</a>
+                </button>
             </address>
             {% endfor %}
             <!-- <address class="col-lg-5 col-md-6 col-sm-12 mt-1 mb-5">
@@ -74,7 +78,21 @@
                 <button type="button" class="btn btn-info">edit</button>
                 <button type="button" class="btn btn-danger">delete</button>
             </address> -->
-            <button type="button" class="btn btn-primary col-sm-10">add address</button>
+            <button type="button" class="btn btn-primary col-sm-10 add-address">add address</button>
+            <form action="/add-address" method="post" class="m-3 address-form">
+                <label for="country" class="form-label">country</label>
+                <input type="text" required  name="country" class="form-control">
+                <label for="state" class="form-label">state</label>
+                <!-- <textarea name="description" id="" cols="30" rows="10" class="form-control"></textarea> -->
+                <input type="text" required  name="state" class="form-control">
+                <label for="city" class="form-label">city</label>
+                <input type="text" required  name="city" class="form-control">
+                <label for="zip" class="form-label">zip</label>
+                <input type="text" required  name="zip" class="form-control">
+                <label for="street" class="form-label">street</label>
+                <input type="text" required  name="street" class="form-control">
+                <input type="submit" class="btn btn-success m-3">
+            </form>
         </div>
     </div>
 </div>

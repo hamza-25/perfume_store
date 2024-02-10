@@ -111,9 +111,13 @@ def home_admin():
 def category():
     if not is_admin():
         return 'access denied'
-    if request.method == 'POST':
-        pass
     from models.Category import Category
+    if request.method == 'POST':
+        name = request.form['name']
+        new_category = Category(name=name)
+        db.session.add(new_category)
+        db.session.commit()
+        return redirect(url_for('category'))
     categories = db.session.query(Category).all()
     return render_template('admin/category.html', categories=categories, title='category page')
 
@@ -122,11 +126,24 @@ def category():
 def product():
     if not is_admin():
         return 'access denied'
-    if request.method == 'POST':
-        pass
+    from models.Category import Category
     from models.Product import Product
+    if request.method == 'POST':
+        title = request.form['title']
+        description = request.form['description']
+        discount_price = float(request.form['discount_price'])
+        price = float(request.form['price'])
+        quantity = int(request.form['quantity'])
+        category_id = int(request.form['category'])
+        new_product = Product(discount_price=discount_price, title=title, description=description,
+                              price=price, quantity=quantity, category_id=category_id)
+        db.session.add(new_product)
+        db.session.commit()
+        return redirect(url_for('product'))
+        
     products = db.session.query(Product).all()
-    return render_template('admin/product.html', products=products, title="product page")
+    categories = db.session.query(Category).all()
+    return render_template('admin/product.html', products=products, title="product page", categories=categories)
 
 @app.route("/admin/order", methods=['GET', 'POST'])
 @login_required
@@ -150,7 +167,6 @@ def user():
     users = db.session.query(User).filter_by(is_admin=None).all()
     return render_template('admin/user.html', users=users, title='users page')
 
-
 @app.route('/user_orders')
 @login_required
 def user_orders():
@@ -158,6 +174,17 @@ def user_orders():
     id = current_user.id
     orders = db.session.query(Order).filter_by(user_id=id).all()
     return render_template('orders.html', title='orders', orders=orders)
+
+
+@app.route('/delete/order/<int:order_id>')
+@login_required
+def delete_order(order_id):
+    from models.Order import Order
+    id = current_user.id
+    order = db.session.query(Order).filter_by(user_id=id, id=order_id).first()
+    db.session.delete(order)
+    db.session.commit()
+    return redirect(url_for('user_orders'))
 
 @app.route('/checkout', methods=['POST'])
 @login_required
@@ -199,7 +226,67 @@ def confirm_checkout():
         return redirect(url_for('user_orders'))
     return redirect(url_for('home'))
     
-        
+@app.route('/add-address', methods=['POST'])
+@login_required
+def add_address():
+    if request.method == 'POST':
+        street = request.form['street']
+        country =  request.form['country']
+        state =  request.form['state']
+        city =  request.form['city']
+        zip =  request.form['zip']
+        from models.Address import Address
+        try:
+            new_address =  Address(street=street, country=country, city=city, zip=zip, state=state, user_id=current_user.id)
+            db.session.add(new_address)
+            db.session.commit()
+        except Exception as e:
+            pass
+        return redirect(f'/profil/{current_user.id}')
+    return render_template('index.html', title='home page')
+
+@app.route('/delete/address/<int:id>', methods=['GET'])
+@login_required
+def delete_address(id):
+    from models.Address import Address
+    address = db.session.query(Address).filter_by(id=int(id)).first()
+    if address.user_id == current_user.id:
+        db.session.delete(address)
+        db.session.commit()
+        return redirect(f'/profil/{current_user.id}')
+    return redirect('home')
+
+@app.route('/edit/address/<int:id>', methods=['GET'])
+@login_required
+def edit_address(id):
+    from models.Address import Address
+    address = db.session.query(Address).filter_by(id=int(id)).first()
+    if address.user_id == current_user.id:
+        return render_template('edit_address.html', title='edit address', address=address)
+    return redirect('home')
+
+@app.route('/update/address', methods=['POST'])
+@login_required
+def update_address():
+    if request.method == "POST":
+        street = request.form['street']
+        country = request.form['country']
+        state = request.form['state']
+        city = request.form['city']
+        zip = request.form['zip']
+        addr_id = request.form['addr_id']
+        from models.Address import Address
+        address = db.session.query(Address).filter_by(id=int(addr_id)).first()
+        if address.user_id == current_user.id:
+            address.country = country
+            address.city = city
+            address.state = state
+            address.zip = zip
+            address.street = street
+            db.session.commit()
+            return redirect(f'/profil/{current_user.id}')
+    return redirect('home')
+    
 
 if __name__ == '__main__':
     app.run(debug=True)

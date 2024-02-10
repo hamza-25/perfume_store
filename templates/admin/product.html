@@ -31,4 +31,26 @@
         {% endfor %}
     </tbody>
 </table>
+<button class="btn btn-info add-product">Add Product</button>
+<form action="/admin/product" method="post" class="m-3 product-form">
+    <label for="title" class="form-label">title</label>
+    <input type="text" required  name="title" class="form-control">
+    <label for="description" class="form-label">description</label>
+    <!-- <textarea name="description" id="" cols="30" rows="10" class="form-control"></textarea> -->
+    <input type="text" required  name="description" class="form-control">
+    <label for="discount_price" class="form-label">discount price</label>
+    <input type="text" required  name="discount_price" class="form-control">
+    <label for="price" class="form-label">price</label>
+    <input type="text" required  name="price" class="form-control">
+    <label for="quantity" class="form-label">quantity</label>
+    <input type="text" required  name="quantity" class="form-control">
+    <label for="category">Category belongs to</label>
+    <select name="category" class="form-select">
+        <option value="none">-- Choose Category --</option>
+        {% for category in categories %}
+            <option value="{{ category.id }}">{{ category.name }}</option>
+        {% endfor %}
+    </select>
+    <input type="submit" class="btn btn-success m-3">
+</form>
 {% endblock %}

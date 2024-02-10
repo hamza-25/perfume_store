@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="d-flex justify-content-center align-items-center mt-5">
+    <form action="/update/address" method="POST" class="col-lg-8 col-md-12">
+        <input type="text" value="{{ address.id }}" name="addr_id" hidden>
+        <div class="form-group">
+            <label for="country">country</label>
+            <input type="text" name="country" class="form-control" value="{{ address.country }}">
+        </div>
+        <div class="form-group">
+            <label for="state">state</label>
+            <input type="text" name="state" class="form-control" value="{{ address.state }}">
+        </div>
+        <div class="form-group">
+            <label for="city">city</label>
+            <input type="text" name="city" class="form-control" value="{{ address.city }}">
+        </div>
+        <div class="form-group">
+            <label for="zip">zip</label>
+            <input type="text" name="zip" class="form-control" value="{{ address.zip }}">
+        </div>
+        <div class="form-group">
+            <label for="agstreete">street</label>
+            <input type="text" name="street" class="form-control" value="{{ address.street }}">
+        </div>
+        <div class="d-flex justify-content-center align-items-center">
+            <button type="submit" class="btn btn-primary col-sm-10 mt-2 mb-5">Update</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
