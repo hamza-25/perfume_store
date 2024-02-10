@@ -186,6 +186,16 @@ def delete_order(order_id):
     db.session.commit()
     return redirect(url_for('user_orders'))
 
+@app.route('/delivered/order/<int:order_id>')
+@login_required
+def delivered(order_id):
+    from models.Order import Order
+    id = current_user.id
+    order = db.session.query(Order).filter_by(user_id=id, id=order_id).first()
+    order.order_status = 'delivered'
+    db.session.commit()
+    return redirect(url_for('user_orders'))
+
 @app.route('/checkout', methods=['POST'])
 @login_required
 def checkout():
