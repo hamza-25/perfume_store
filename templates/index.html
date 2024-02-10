@@ -10,15 +10,15 @@
 </div>
 <div class=" d-flex justify-content-center">
     <div class="search d-flex justify-content-center m-5">
-        <form action="" method="">
-            <select name="categories" class="custom-select" id="">
-                <option selected>category</option>
+        <form action="/search" method="post">
+            <select name="category" class="custom-select" id="">
+                <option selected value="none">category</option>
                 {% for category in categories %}
                 <option value="{{ category.name }}">{{ category.name }}</option>
                 {% endfor %}
             </select>
-            <input type="search" placeholder="Search" class="custom-search">
-            <button type="button" class="btn m-1">search</button>
+            <input type="search" placeholder="Search" class="custom-search" name="search">
+            <input type="submit" class="btn m-1" value="search">
         </form>
     </div>
 </div>
@@ -32,7 +32,9 @@
                 <a href="/product/{{ product.id }}" style="text-decoration: none;color: black;"><h5 class="card-title">{{ product.title }}</h5></a>
                 <p class="card-text">{{ product.description }}</p>
                 <p class="card-text">${{ product.price }}</p>
-                <button class="button-55" role="button">Buy Now</button>
+                <!-- <form action="/checkout" method="post">
+                    <button class="button-55" role="button">Buy Now</button>
+                </form> -->
                 <button class="button-55 col-md-6" role="button">Add to Cart</button>
             </div>
         </div>

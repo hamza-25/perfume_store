@@ -50,12 +50,23 @@ def single_product(id):
     admin = is_admin()
     return render_template('single_product_page.html', admin=admin, title='product', product=product)
 
-@app.route('/profil/<int:id>')
+@app.route('/profil/<int:id>', methods=['GET', 'POST'])
 @login_required
 def profil(id):
     from models.User import User
+    if request.method == 'POST':
+        fname = request.form['first-name']
+        lname = request.form['last-name']
+        email = request.form['email']
+        user = get_profil_by_id(User, db, int(id))
+        user.email = email
+        user.first_name = fname
+        user.last_name = lname
+        db.session.commit()
+        return redirect(f'/profil/{id}')
     user = get_profil_by_id(User, db, int(id))
     return render_template('profil.html', title='profil', user=user)
+
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -296,7 +307,26 @@ def update_address():
             db.session.commit()
             return redirect(f'/profil/{current_user.id}')
     return redirect('home')
+
+
+@app.route('/search', methods=['post'])
+def search():
+    if request.method == 'post':
+        admin = is_admin()
+        search_input = request.form['search']
+        category = request.form['category']
+        from models.Product import Product
+        from models.Category import Category
+        if category == 'none':
+            products = db.session.query(Product).filter(Product.title.like(f'%{search_input}%')).all()
+            categories = get_all(Category, db)
+            return render_template('index.html', title='Home Page', pr=products, categories=categories, admin=admin)
+        elif category is int:
+            products = db.session.query(Product).filter_by(category_id=category).filter(Product.title.like(f'%{search_input}%')).all()
+            categories = get_all(Category, db)
+            return render_template('index.html', title='Home Page', pr=products, categories=categories, admin=admin)
     
+    return redirect(url_for('home'))  
 
 if __name__ == '__main__':
     app.run(debug=True)
