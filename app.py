@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, url_for, redirect
+from flask import Flask, render_template, request, url_for, redirect, flash
 from flask_sqlalchemy import SQLAlchemy
 from db_info import USER, PASSWORD, DATABASE_NAME
 
@@ -128,9 +128,35 @@ def category():
         new_category = Category(name=name)
         db.session.add(new_category)
         db.session.commit()
+        flash('Category added successfully', 'success')
         return redirect(url_for('category'))
     categories = db.session.query(Category).all()
     return render_template('admin/category.html', categories=categories, title='category page')
+
+@app.route('/admin/edit/category/<int:id>', methods=['GET', 'POST'])
+def edit_category(id):
+    if not is_admin():
+        return 'access denied'
+    from models.Category import Category
+    category = db.session.query(Category).filter_by(id=id).first()
+    if request.method == 'POST':
+        category_name = request.form['category_name']
+        category.name = category_name
+        db.session.commit()
+        flash('Category updated successfully', 'success')
+        return redirect(url_for('category'))
+    return render_template('admin/edit_category.html', title='edit category', category=category)
+
+@app.route('/admin/delete/category/<int:id>')
+def delete_category(id):
+    if not is_admin():
+        return 'access denied'
+    from models.Category import Category
+    category = db.session.query(Category).filter_by(id=id).first()
+    db.session.delete(category)
+    db.session.commit()
+    flash('Category deleted successfully', 'error')
+    return redirect(url_for('category'))
 
 @app.route("/admin/product", methods=['GET', 'POST'])
 @login_required
@@ -150,22 +176,76 @@ def product():
                               price=price, quantity=quantity, category_id=category_id)
         db.session.add(new_product)
         db.session.commit()
+        flash('Product added successfully', 'successfully')
         return redirect(url_for('product'))
         
     products = db.session.query(Product).all()
     categories = db.session.query(Category).all()
     return render_template('admin/product.html', products=products, title="product page", categories=categories)
 
+
+@app.route("/admin/edit/product/<int:id>", methods=['GET', 'POST'])
+@login_required
+def edit_product(id):
+    if not is_admin():
+        return 'access denied'
+    from models.Product import Product
+    product = get_product_by_id(Product, db, id)
+    if request.method == 'POST':
+        title = request.form['title']
+        description = request.form['description']
+        discount_price = float(request.form['discount_price'])
+        price = float(request.form['price'])
+        quantity = int(request.form['quantity'])
+        category_id = int(request.form['category'])
+        product.title = title
+        product.description = description
+        product.discount_price = discount_price
+        product.price = price
+        product.quantity = quantity
+        product.category_id = category_id
+        db.session.commit()
+        flash('Product updated successfully', 'success')
+        return redirect(url_for('product'))
+        
+    from models.Category import Category
+    categories = get_all(Category, db)
+    return render_template('admin/edit_product.html', product=product, title='edit product', categories=categories)
+    
+
+
+@app.route("/admin/delete/product/<int:id>", methods=['GET'])
+@login_required
+def delete_product(id):
+    from models.Product import Product
+    product = db.session.query(Product).filter_by(id=id).first()
+    db.session.delete(product)
+    db.session.commit()
+    flash('Product deleted successfully', 'successfully')
+    return redirect(url_for('product'))
+
+
 @app.route("/admin/order", methods=['GET', 'POST'])
 @login_required
 def order():
     if not is_admin():
         return 'access denied'
-    if request.method == 'POST':
-        pass
     from models.Order import Order
-    orders = db.session.query(Order).all()
+    orders = get_all(Order, db)
     return render_template('admin/order.html', orders=orders, title='order page')
+
+@app.route("/admin/delete/order/<int:id>", methods=['GET'])
+@login_required
+def admin_delete_order(id):
+    if not is_admin():
+        return 'access denied'
+    from models.Order import Order
+    order = db.session.query(Order).filter_by(id=id).first()
+    db.session.delete(order)
+    db.session.commit()
+    flash('order deleted successfully', 'successfully')
+    return redirect(url_for('order'))
+
 
 @app.route("/admin/user", methods=['GET', 'POST'])
 @login_required
@@ -177,6 +257,19 @@ def user():
     from models.User import User
     users = db.session.query(User).filter_by(is_admin=None).all()
     return render_template('admin/user.html', users=users, title='users page')
+
+@app.route("/admin/delete/user/<int:id>", methods=['GET'])
+@login_required
+def admin_delete_user(id):
+    if not is_admin():
+        return 'access denied'
+    from models.User import User
+    user = db.session.query(User).filter_by(id=id).first()
+    db.session.delete(user)
+    db.session.commit()
+    flash('user deleted successfully', 'successfully')
+    return redirect(url_for('user'))
+
 
 @app.route('/user_orders')
 @login_required
@@ -309,9 +402,9 @@ def update_address():
     return redirect('home')
 
 
-@app.route('/search', methods=['post'])
+@app.route('/search', methods=['GET', 'POST'])
 def search():
-    if request.method == 'post':
+    if request.method == 'POST':
         admin = is_admin()
         search_input = request.form['search']
         category = request.form['category']
@@ -321,10 +414,11 @@ def search():
             products = db.session.query(Product).filter(Product.title.like(f'%{search_input}%')).all()
             categories = get_all(Category, db)
             return render_template('index.html', title='Home Page', pr=products, categories=categories, admin=admin)
-        elif category is int:
-            products = db.session.query(Product).filter_by(category_id=category).filter(Product.title.like(f'%{search_input}%')).all()
-            categories = get_all(Category, db)
-            return render_template('index.html', title='Home Page', pr=products, categories=categories, admin=admin)
+        else:
+            #  return category
+             products = db.session.query(Product).filter_by(category_id=category).filter(Product.title.like(f'%{search_input}%')).all()
+             categories = get_all(Category, db)
+             return render_template('index.html', title='Home Page', pr=products, categories=categories, admin=admin)
     
     return redirect(url_for('home'))  
 

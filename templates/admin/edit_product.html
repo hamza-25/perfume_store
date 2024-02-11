@@ -1,0 +1,32 @@
+{% extends 'admin/base_admin.html' %}
+{% block content %}
+<div class="d-flex justify-content-center align-items-center">
+    <form action="/admin/edit/product/{{ product.id }}" method="POST" class="col-lg-8 col-md-12">
+        <div class="form-group">
+            <label for="product_name">title</label>
+            <input type="text" name="title" class="form-control" value="{{ product.title }}">
+        </div>
+        <label for="description" class="form-label">description</label>
+        <input type="text" required name="description" class="form-control" value="{{ product.description }}">
+        <label for="discount_price" class="form-label">discount price</label>
+        <input type="text" required name="discount_price" class="form-control" value="{{ product.discount_price }}">
+        <label for="price" class="form-label">price</label>
+        <input type="text" required name="price" class="form-control" value="{{ product.price }}">
+        <label for="quantity" class="form-label">quantity</label>
+        <input type="text" required name="quantity" class="form-control" value="{{ product.quantity }}">
+        <label for="category">Category belongs to</label>
+        <select name="category" class="form-select">
+            <option value="{{ product.category.id }}" selected>{{ product.category.name }}</option>
+            {% for category in categories %}
+            {% if category.name != product.category.name %}
+            <option value="{{ category.id }}">{{ category.name }}</option>
+            {% endif %}
+            {% endfor %}
+        </select>
+        <div class="d-flex justify-content-center align-items-center">
+            <button type="submit" class="btn btn-primary col-sm-10 mt-2 mb-5">Update</button>
+
+        </div>
+    </form>
+</div>
+{% endblock %}

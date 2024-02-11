@@ -1,5 +1,14 @@
 {% extends 'admin/base_admin.html' %}
 {% block content %}
+{% with messages = get_flashed_messages()%}
+{% if messages %}
+<ul>
+    {% for message in messages %}
+    <li class="alert alert-info">{{message}}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
 <table class="table">
     <thead>
         <tr>
@@ -13,10 +22,11 @@
             <td>{{ category.name }}</td>
             <td>
                 <button class="btn btn-info">
-                    <a href="/edit/category/{{ category.id }}">edit</a>
+                    <a href="/admin/edit/category/{{ category.id }}">edit</a>
                 </button>
                 <button class="btn btn-danger">
-                    <a href="/delete/category/{{ category.id }}">delete</a>
+                    <a href="/admin/delete/category/{{ category.id }}"
+                        onclick="return confirm('Are you sure you want to delete this Category?')">delete</a>
                 </button>
             </td>
         </tr>
@@ -26,7 +36,7 @@
 <button class="btn btn-info add-category">Add Category</button>
 <form action="/admin/category" method="post" class="m-3 category-form">
     <label for="name" class="form-label">category name</label>
-    <input type="text" required  name="name" class="form-control">
+    <input type="text" required name="name" class="form-control">
     <input type="submit" class="btn btn-success m-3">
 </form>
 {% endblock %}

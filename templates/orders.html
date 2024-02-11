@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block body %}
 <div class="container">
+    {% if orders %}
     <table class="table m-2">
         <thead>
             <tr>
@@ -14,6 +15,11 @@
             </tr>
         </thead>
         <tbody>
+            {% else %}
+            <div class="alert alert-warning mt-5">
+                No orders found !
+            </div>
+            {% endif %}
             {% for order in orders %}
             <tr>
                 <td>{{ order.transaction }}</td>
@@ -24,10 +30,12 @@
                 <td>{{ order.payement_method }}</td>
                 <td>
                     <button class="btn btn-danger">
-                        <a href="/delete/order/{{ order.id }}" onclick="return confirm('Are you sure you want to cancel this order?')">Cancel</a>
+                        <a href="/delete/order/{{ order.id }}"
+                            onclick="return confirm('Are you sure you want to cancel this order?')">Cancel</a>
                     </button>
                     <button class="btn btn-info">
-                        <a href="/delivered/order/{{ order.id }}" onclick="return confirm('Are you sure your order has delivered?')">confirm delivery</a>
+                        <a href="/delivered/order/{{ order.id }}"
+                            onclick="return confirm('Are you sure your order has delivered?')">confirm delivery</a>
                     </button>
                 </td>
             </tr>

@@ -1,5 +1,14 @@
 {% extends 'admin/base_admin.html' %}
 {% block content %}
+{% with messages = get_flashed_messages()%}
+{% if messages %}
+<ul>
+    {% for message in messages %}
+    <li class="alert alert-info">{{message}}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
 <table class="table">
     <thead>
         <tr>
@@ -19,10 +28,10 @@
             <td>{{ user.updated_at }}</td>
             <td>
                 <button class="btn btn-info">
-                    <a href="/edit/user/{{ user.id }}">edit</a>
+                    <a href="#">ban</a>
                 </button>
                 <button class="btn btn-danger">
-                    <a href="/delete/user/{{ user.id }}">delete</a>
+                    <a href="/admin/delete/user/{{ user.id }}">delete</a>
                 </button>
             </td>
         </tr>
