@@ -1,6 +1,15 @@
 {% extends 'base.html' %}
 {% block body %}
 <div class="container">
+    {% with messages = get_flashed_messages()%}
+    {% if messages %}
+    <ul class="mt-5">
+        {% for message in messages %}
+        <li class="alert alert-info">{{message}}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
     {% if orders %}
     <table class="table m-2">
         <thead>

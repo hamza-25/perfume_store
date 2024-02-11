@@ -7,12 +7,25 @@
   <div class="col-75">
     <div class="container">
       <form action="/confirm_checkout" method="POST">
-      
         <div class="row">
           <div class="col-50">
             <h3>Billing Address</h3>
-            <!-- <label for="fname"><i class="fa fa-user"></i> Full Name</label>
-            <input type="text" id="fname" name="firstname" placeholder="John M. Doe"> -->
+
+            {% for address in user.addresses%}
+            <address>
+              country: {{ address.country }}<br>
+              state: {{ address.state }}<br>
+              city: {{ address.city }}<br>
+              street: {{ address.street }}<br>
+              zip: {{ address.zip }}<br>
+              <input type="radio" name="address" value="{{ address.id }}" required>
+            </address>
+            {% else %}
+            <div class="alert alert-info">
+              please add address from your profil
+            </div>
+            {% endfor %}
+
             <label for="country"><i class="fa fa-envelope"></i> Country</label>
             <input type="text" id="text" name="country" placeholder="country">
             <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
@@ -21,7 +34,6 @@
             <input type="text" id="city" name="city" placeholder="New York">
             <input type="text" hidden value="{{ total }}" required name="total">
             <input type="text" hidden value="{{ product_id }}" required name="product_id">
-
             <div class="row">
               <div class="col-50">
                 <label for="state">State</label>
@@ -34,7 +46,7 @@
             </div>
           </div>
 
-          <div class="col-50">
+          <div class="col-50 mt-5">
             <h3>Payment</h3>
             <label for="fname">Accepted Cards</label>
             <div class="icon-container">
@@ -59,26 +71,28 @@
                 <input type="text" id="cvv" name="cvv" placeholder="352">
               </div>
             </div>
+            <hr>
+            <p>Total <span class="price" style="color:black"><b>${{ total }}</b></span></p>
+            <input type="submit" value="Confirm checkout" class="btn">
+
           </div>
-          
         </div>
         <!-- <label>
           <input type="checkbox" checked="checked" name="sameadr"> Shipping address same as billing
         </label> -->
-        <input type="submit" value="Confirm checkout" class="btn">
       </form>
     </div>
   </div>
-  <div class="col-15 m-2">
-    <div class="container">
-      <!-- <h4>Cart <span class="price" style="color:black"><i class="fa fa-shopping-cart"></i> <b>1</b></span></h4> -->
-      <!-- <p><a href="#">Product 1</a> <span class="price">$15</span></p> -->
-      <!-- <p><a href="#">Product 2</a> <span class="price">$5</span></p>
+  <!-- <div class="col-15 m-2">
+  <div class="container">
+    <h4>Cart <span class="price" style="color:black"><i class="fa fa-shopping-cart"></i> <b>1</b></span></h4>
+    <p><a href="#">Product 1</a> <span class="price">$15</span></p>
+    <p><a href="#">Product 2</a> <span class="price">$5</span></p>
       <p><a href="#">Product 3</a> <span class="price">$8</span></p>
-      <p><a href="#">Product 4</a> <span class="price">$2</span></p> -->
-      <hr>
-      <p>Total <span class="price" style="color:black"><b>${{ total }}</b></span></p>
-    </div>
+      <p><a href="#">Product 4</a> <span class="price">$2</span></p>
+    <hr>
+    <p>Total <span class="price" style="color:black"><b>${{ total }}</b></span></p>
   </div>
+</div> -->
 </div>
 {% endblock %}

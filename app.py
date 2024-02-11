@@ -63,6 +63,7 @@ def profil(id):
         user.first_name = fname
         user.last_name = lname
         db.session.commit()
+        flash('profil updated successfully', 'successfully')
         return redirect(f'/profil/{id}')
     user = get_profil_by_id(User, db, int(id))
     return render_template('profil.html', title='profil', user=user)
@@ -288,6 +289,7 @@ def delete_order(order_id):
     order = db.session.query(Order).filter_by(user_id=id, id=order_id).first()
     db.session.delete(order)
     db.session.commit()
+    flash('order deleted successfully')
     return redirect(url_for('user_orders'))
 
 @app.route('/delivered/order/<int:order_id>')
@@ -298,6 +300,7 @@ def delivered(order_id):
     order = db.session.query(Order).filter_by(user_id=id, id=order_id).first()
     order.order_status = 'delivered'
     db.session.commit()
+    flash('order status change to delivered')
     return redirect(url_for('user_orders'))
 
 @app.route('/checkout', methods=['POST'])
@@ -311,32 +314,35 @@ def checkout():
         from models.Product import Product
         product = db.session.query(Product).filter_by(id=product_id).first()
         total = float(quantity) * float(product.price)
-        return render_template('checkout_page.html', title="checkout page", total=total, product_id=product_id)
+        from models.User import User
+        user = get_user_by_id(User, db, current_user.id)
+        return render_template('checkout_page.html', user=user, title="checkout page", total=total, product_id=product_id)
         
         
 @app.route('/confirm_checkout', methods=['POST'])
 @login_required
 def confirm_checkout():
     if request.method == 'POST':
-        street = request.form['street']
-        country = request.form['country']
-        state = request.form['state']
-        city = request.form['city']
-        zip = request.form['zip']
+        # street = request.form['street']
+        # country = request.form['country']
+        # state = request.form['state']
+        # city = request.form['city']
+        # zip = request.form['zip']
+        address_id = request.form['address']
         user_id = current_user.id
         total = float(request.form['total'])
         product_id = int(request.form['product_id'])
-        from models.Address import Address
+        # from models.Address import Address
         from models.Order import Order
         from datetime import datetime
         from random import randint
         transaction = f'{user_id}DFGF{randint(0, 10000)}'
-        
-        new_address = Address(user_id=user_id, city=city, zip=zip, state=state, country=country, street=street)
+        # new_address = Address(user_id=user_id, city=city, zip=zip, state=state, country=country, street=street)
         new_order = Order(user_id=user_id, transaction=transaction, total_price=total, products_id=product_id, order_status='placed', ordered_at=datetime.now(), payement_method='Credit Card')
-        db.session.add(new_address)
+        # db.session.add(new_address)
         db.session.add(new_order)
         db.session.commit()
+        flash('order has successfully placed')
         return redirect(url_for('user_orders'))
     return redirect(url_for('home'))
     
@@ -356,6 +362,7 @@ def add_address():
             db.session.commit()
         except Exception as e:
             pass
+        flash('address added successfully')
         return redirect(f'/profil/{current_user.id}')
     return render_template('index.html', title='home page')
 
@@ -367,6 +374,7 @@ def delete_address(id):
     if address.user_id == current_user.id:
         db.session.delete(address)
         db.session.commit()
+        flash('address deleted successfully')
         return redirect(f'/profil/{current_user.id}')
     return redirect('home')
 
@@ -398,6 +406,7 @@ def update_address():
             address.zip = zip
             address.street = street
             db.session.commit()
+            flash('address updated successfully')
             return redirect(f'/profil/{current_user.id}')
     return redirect('home')
 
