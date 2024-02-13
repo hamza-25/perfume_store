@@ -1,11 +1,13 @@
 from flask import Flask, render_template, request, url_for, redirect, flash
 from flask_sqlalchemy import SQLAlchemy
 from db_info import USER, PASSWORD, DATABASE_NAME
+from flask_migrate import Migrate
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'thisisasecretkeyformyapp'
 app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{USER}:@localhost/{DATABASE_NAME}'
 db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
 from models import Category, Product, Address, Order, User
 from db_operation import *
@@ -81,9 +83,9 @@ def register():
         confirm_password = request.form['confirm_password']
         if password != confirm_password:
             return 'password not match'
-        # hash_password = generate_password_hash(password)
+        hash_password = generate_password_hash(password)
         from models.User import User
-        new_user = User(first_name=fname, last_name=lname, password=password, confirm_password=password, email=email, email_verification=email, created_at=datetime.now(), updated_at=datetime.now())
+        new_user = User(first_name=fname, last_name=lname, password=hash_password, confirm_password=hash_password, email=email, email_verification=email, created_at=datetime.now(), updated_at=datetime.now())
         db.session.add(new_user)
         db.session.commit()
         login_user(new_user)
@@ -97,12 +99,11 @@ def login():
         password = request.form['password']
         from models.User import User
         user = db.session.query(User).filter_by(email=email).first()
-        if user: 
-            if password == user.password:
-                login_user(user) 
-                return redirect(url_for('home')) 
-            else:
-                return 'Invalid username or password'  
+        if user and check_password_hash(user.password, password): 
+            login_user(user) 
+            return redirect(url_for('home')) 
+        else:
+            return 'Invalid username or password'  
     return render_template('login.html')
 
 @app.route("/logout")
