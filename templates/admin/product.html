@@ -42,7 +42,7 @@
     </tbody>
 </table>
 <button class="btn btn-info add-product">Add Product</button>
-<form action="/admin/product" method="post" class="m-3 product-form">
+<form action="/admin/product" method="post" class="m-3 product-form" enctype="multipart/form-data">
     <label for="title" class="form-label">title</label>
     <input type="text" required name="title" class="form-control">
     <label for="description" class="form-label">description</label>
@@ -53,6 +53,8 @@
     <input type="text" required name="price" class="form-control">
     <label for="quantity" class="form-label">quantity</label>
     <input type="text" required name="quantity" class="form-control">
+    <label for="file" class="form-label">image</label>
+    <input type="file" required name="file" class="form-control mb-2">
     <label for="category">Category belongs to</label>
     <select name="category" class="form-select">
         <option value="none">-- Choose Category --</option>

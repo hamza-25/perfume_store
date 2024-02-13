@@ -6,6 +6,7 @@ from flask_migrate import Migrate
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'thisisasecretkeyformyapp'
 app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{USER}:@localhost/{DATABASE_NAME}'
+app.config['UPLOAD_FOLDER'] = 'static/images/uploads/'
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
@@ -174,8 +175,14 @@ def product():
         price = float(request.form['price'])
         quantity = int(request.form['quantity'])
         category_id = int(request.form['category'])
+        
+        file = request.files['file']
+        import uuid, os
+        filename = str(uuid.uuid4()) + os.path.splitext(file.filename)[1]
+        file.save(os.path.join('static/images/uploads', filename))
+        
         new_product = Product(discount_price=discount_price, title=title, description=description,
-                              price=price, quantity=quantity, category_id=category_id)
+                              price=price, quantity=quantity, category_id=category_id, image=filename)
         db.session.add(new_product)
         db.session.commit()
         flash('Product added successfully', 'successfully')

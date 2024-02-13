@@ -8,7 +8,7 @@ class Product(db.Model):
     price = db.Column(db.Float, nullable=False)
     discount_price = db.Column(db.Float)
     quantity = db.Column(db.Integer, nullable=False)
-    image = db.Column(db.String(128), nullable=False)
+    image = db.Column(db.String(128), nullable=True)
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'), nullable=False)
     category = db.relationship('Category', backref=db.backref('products_ref', lazy=True))
     
