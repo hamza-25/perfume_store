@@ -27,15 +27,15 @@
             {% endfor %}
             <div class="form-group">
                 {{ form.first_name.label }}:
-                <input type="text" name="first_name" value="{{ form.first_name.default }}" class="form-control"><br>
+                <input type="text" name="first_name" value="{{ form.first_name.default }}"><br>
             </div>
             <div class="form-group">
                 {{ form.last_name.label }}
-                <input type="text" name="last_name" value="{{ form.last_name.default }}" class="form-control"><br>
+                <input type="text" name="last_name" value="{{ form.last_name.default }}"><br>
             </div>
             <div class="form-group">
                 {{ form.email.label }}
-                <input type="email" name="email" value="{{ form.email.default }}" class="form-control"><br>
+                <input type="email" name="email" value="{{ form.email.default }}"><br>
             </div>
             <div class="d-flex justify-content-center align-items-center">
                 <button type="submit" class="btn btn-primary col-sm-10 mt-2 mb-5">Update</button>

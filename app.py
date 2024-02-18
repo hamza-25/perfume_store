@@ -2,7 +2,6 @@ from flask import Flask, render_template, request, url_for, redirect, flash
 from flask_sqlalchemy import SQLAlchemy
 from db_info import USER, PASSWORD, DATABASE_NAME
 from flask_migrate import Migrate
-# from form_validator.registerFrom import RegisterFrom
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'thisisasecretkeyformyapp'
@@ -58,9 +57,12 @@ def single_product(id):
 @login_required
 def profil(id):
     from models.User import User
-    if request.method == 'POST':
-        fname = request.form['first-name']
-        lname = request.form['last-name']
+    from form_validator.profilForm import ProfilFrom
+    form = ProfilFrom(request.form)
+    # hanlde post request
+    if request.method == 'POST' and form.validate():
+        fname = request.form['first_name']
+        lname = request.form['last_name']
         email = request.form['email']
         user = get_profil_by_id(User, db, int(id))
         user.email = email
@@ -69,15 +71,23 @@ def profil(id):
         db.session.commit()
         flash('profil updated successfully', 'successfully')
         return redirect(f'/profil/{id}')
+    # hanlde get request 
     user = get_profil_by_id(User, db, int(id))
-    return render_template('profil.html', title='profil', user=user)
+    # set form to default values
+    form.first_name.default = user.first_name
+    form.last_name.default = user.last_name
+    form.email.default = user.email
+    return render_template('profil.html', title='profil', user=user, form=form)
 
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
         return redirect(url_for('home'))
-    if request.method == 'POST':
+    from form_validator.registerFrom import RegisterFrom
+    form = RegisterFrom(request.form)
+    # handle post request
+    if request.method == 'POST' and form.validate():
         fname = request.form['first_name']
         lname = request.form['last_name']
         email = request.form['email']
@@ -92,12 +102,14 @@ def register():
         db.session.commit()
         login_user(new_user)
         return redirect(url_for('home'))
-    return render_template('register.html', title="register page")
+    # handle get request
+    return render_template('register.html', title="register page", form=form)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     from form_validator.loginFrom import LoginFrom
     form = LoginFrom(request.form)
+    # handle post request
     if request.method == 'POST' and form.validate():
         email = request.form['email']
         password = request.form['password']
@@ -108,6 +120,7 @@ def login():
             return redirect(url_for('home')) 
         else:
             flash('Email or Password incorrect !')  
+    # handle get request
     return render_template('login.html', form=form)
 
 @app.route("/logout")

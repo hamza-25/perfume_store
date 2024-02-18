@@ -22,7 +22,8 @@
                     {% if messages %}
                     <ul>
                         {% for message in messages %}
-                        <li class="alert alert-info">{{message}}</li>
+                        <!-- <li class="alert alert-info">{{message}}</li> -->
+                        <li style="color: red;">{{message}}</li>
                         {% endfor %}
                     </ul>
                     {% endif %}
@@ -39,9 +40,9 @@
                     <input type="email" name="email" id=""><br>
                     <label for="">password</label><br>
                     <input type="password" name="password"><br> -->
-                    <input type="submit" value="login">
+                    <input type="submit" value="login" class="mt-2"><br>
+                    <a href="{{ url_for('register') }}" class="m-2" style="color: white;">I dont have an Account !</a>
                 </form>
-                <a href="{{ url_for('register') }}" class="m-2">I dont have an Account !</a>
             </div>
         </div>
     </div>
