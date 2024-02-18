@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, url_for, redirect, flash
 from flask_sqlalchemy import SQLAlchemy
 from db_info import USER, PASSWORD, DATABASE_NAME
 from flask_migrate import Migrate
+# from form_validator.registerFrom import RegisterFrom
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'thisisasecretkeyformyapp'
@@ -95,7 +96,9 @@ def register():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    if request.method == 'POST':
+    from form_validator.loginFrom import LoginFrom
+    form = LoginFrom(request.form)
+    if request.method == 'POST' and form.validate():
         email = request.form['email']
         password = request.form['password']
         from models.User import User
@@ -104,8 +107,8 @@ def login():
             login_user(user) 
             return redirect(url_for('home')) 
         else:
-            return 'Invalid username or password'  
-    return render_template('login.html')
+            flash('Email or Password incorrect !')  
+    return render_template('login.html', form=form)
 
 @app.route("/logout")
 @login_required
