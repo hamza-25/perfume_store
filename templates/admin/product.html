@@ -43,6 +43,12 @@
 </table>
 <button class="btn btn-info add-product">Add Product</button>
 <form action="/admin/product" method="post" class="m-3 product-form" enctype="multipart/form-data">
+    {{ form.csrf_token }}
+    {% for field, errors in form.errors.items() %}
+    {% for error in errors %}
+    <span style="color: red;">{{ error }}</span><br>
+    {% endfor %}
+    {% endfor %}
     <label for="title" class="form-label">title</label>
     <input type="text" required name="title" class="form-control">
     <label for="description" class="form-label">description</label>

@@ -71,8 +71,10 @@ def profil(id):
         db.session.commit()
         flash('profil updated successfully', 'successfully')
         return redirect(f'/profil/{id}')
+    
     # hanlde get request 
     user = get_profil_by_id(User, db, int(id))
+    
     # set form to default values
     form.first_name.default = user.first_name
     form.last_name.default = user.last_name
@@ -142,7 +144,9 @@ def category():
     if not is_admin():
         return 'access denied'
     from models.Category import Category
-    if request.method == 'POST':
+    from form_validator.categoryForm import CategoryFrom
+    form = CategoryFrom(request.form)
+    if request.method == 'POST' and form.validate():
         name = request.form['name']
         new_category = Category(name=name)
         db.session.add(new_category)
@@ -150,7 +154,7 @@ def category():
         flash('Category added successfully', 'success')
         return redirect(url_for('category'))
     categories = db.session.query(Category).all()
-    return render_template('admin/category.html', categories=categories, title='category page')
+    return render_template('admin/category.html', categories=categories, title='category page', form=form)
 
 @app.route('/admin/edit/category/<int:id>', methods=['GET', 'POST'])
 def edit_category(id):
@@ -184,6 +188,8 @@ def product():
         return 'access denied'
     from models.Category import Category
     from models.Product import Product
+    from form_validator.productForm import ProductForm
+    form = ProductForm(request.form)
     if request.method == 'POST':
         title = request.form['title']
         description = request.form['description']
@@ -206,7 +212,7 @@ def product():
         
     products = db.session.query(Product).all()
     categories = db.session.query(Category).all()
-    return render_template('admin/product.html', products=products, title="product page", categories=categories)
+    return render_template('admin/product.html', products=products, title="product page", categories=categories, form=form)
 
 
 @app.route("/admin/edit/product/<int:id>", methods=['GET', 'POST'])
