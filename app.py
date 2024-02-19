@@ -347,23 +347,15 @@ def checkout():
 @login_required
 def confirm_checkout():
     if request.method == 'POST':
-        # street = request.form['street']
-        # country = request.form['country']
-        # state = request.form['state']
-        # city = request.form['city']
-        # zip = request.form['zip']
         address_id = request.form['address']
         user_id = current_user.id
         total = float(request.form['total'])
         product_id = int(request.form['product_id'])
-        # from models.Address import Address
         from models.Order import Order
         from datetime import datetime
         from random import randint
         transaction = f'{user_id}DFGF{randint(0, 10000)}'
-        # new_address = Address(user_id=user_id, city=city, zip=zip, state=state, country=country, street=street)
-        new_order = Order(user_id=user_id, transaction=transaction, total_price=total, products_id=product_id, order_status='placed', ordered_at=datetime.now(), payement_method='Credit Card')
-        # db.session.add(new_address)
+        new_order = Order(user_id=user_id, transaction=transaction, total_price=total, products_id=product_id, order_status='placed', ordered_at=datetime.now(), payement_method='cash on delivery')
         db.session.add(new_order)
         db.session.commit()
         flash('order has successfully placed')
@@ -379,16 +371,18 @@ def add_address():
         state =  request.form['state']
         city =  request.form['city']
         zip =  request.form['zip']
+        full_name = request.form['full_name']
         from models.Address import Address
         try:
-            new_address =  Address(street=street, country=country, city=city, zip=zip, state=state, user_id=current_user.id)
+            new_address =  Address(full_name=full_name, street=street, country=country, city=city, zip=zip, state=state, user_id=current_user.id)
             db.session.add(new_address)
             db.session.commit()
         except Exception as e:
             pass
         flash('address added successfully')
         return redirect(f'/profil/{current_user.id}')
-    return render_template('index.html', title='home page')
+    return redirect(f'/profil/{current_user.id}')
+
 
 @app.route('/delete/address/<int:id>', methods=['GET'])
 @login_required
@@ -416,6 +410,7 @@ def edit_address(id):
 def update_address():
     if request.method == "POST":
         street = request.form['street']
+        full_name = request.form['full_name']
         country = request.form['country']
         state = request.form['state']
         city = request.form['city']
@@ -429,10 +424,11 @@ def update_address():
             address.state = state
             address.zip = zip
             address.street = street
+            address.full_name = full_name
             db.session.commit()
             flash('address updated successfully')
             return redirect(f'/profil/{current_user.id}')
-    return redirect('home')
+    return redirect(f'/profil/{current_user.id}')
 
 
 @app.route('/search', methods=['GET', 'POST'])

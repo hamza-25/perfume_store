@@ -48,7 +48,7 @@
             {% for address in user.addresses %}
             <address class="col-lg-5 col-md-6 col-sm-12 mt-1 mb-5">
                 <input type="text" hidden value="{{ address.id }}">
-                full name: {{ user.first_name }} {{ user.last_name }}<br>
+                full name: {{ address.full_name }}<br>
                 country: {{ address.country }}<br>
                 province: {{ address.state }}<br>
                 city: {{ address.city }}<br>
@@ -63,34 +63,13 @@
                 </button>
             </address>
             {% endfor %}
-            <!-- <address class="col-lg-5 col-md-6 col-sm-12 mt-1 mb-5">
-                <p>full name: Lorem ipsum dolor sit.</p>
-                <p>country: Lorem ipsum dolor sit.</p>
-                <p>province: Lorem ipsum dolor sit.</p>
-                <p>city: Lorem ipsum dolor sit.</p>
-                <p>zip-code: Lorem ipsum dolor sit.</p>
-                <p>address: Lorem ipsum dolor sit.</p>
-                <p>phone: Lorem ipsum dolor sit.</p>
-                <button type="button" class="btn btn-info">edit</button>
-                <button type="button" class="btn btn-danger">delete</button>
-            </address>
-            <address class="col-lg-5 col-md-6 col-sm-12 mt-1 mb-5">
-                <p>full name: Lorem ipsum dolor sit.</p>
-                <p>country: Lorem ipsum dolor sit.</p>
-                <p>province: Lorem ipsum dolor sit.</p>
-                <p>city: Lorem ipsum dolor sit.</p>
-                <p>zip-code: Lorem ipsum dolor sit.</p>
-                <p>address: Lorem ipsum dolor sit.</p>
-                <p>phone: Lorem ipsum dolor sit.</p>
-                <button type="button" class="btn btn-info">edit</button>
-                <button type="button" class="btn btn-danger">delete</button>
-            </address> -->
             <button type="button" class="btn btn-primary col-sm-10 add-address">add address</button>
             <form action="/add-address" method="post" class="m-3 address-form">
+                <label for="full_name" class="form-label">full name</label>
+                <input type="text" required name="full_name" class="form-control">
                 <label for="country" class="form-label">country</label>
                 <input type="text" required name="country" class="form-control">
                 <label for="state" class="form-label">state</label>
-                <!-- <textarea name="description" id="" cols="30" rows="10" class="form-control"></textarea> -->
                 <input type="text" required name="state" class="form-control">
                 <label for="city" class="form-label">city</label>
                 <input type="text" required name="city" class="form-control">

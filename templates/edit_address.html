@@ -4,6 +4,10 @@
     <form action="/update/address" method="POST" class="col-lg-8 col-md-12">
         <input type="text" value="{{ address.id }}" name="addr_id" hidden>
         <div class="form-group">
+            <label for="full_name">Full Name</label>
+            <input type="text" name="full_name" class="form-control" value="{{ address.full_name }}">
+        </div>
+        <div class="form-group">
             <label for="country">country</label>
             <input type="text" name="country" class="form-control" value="{{ address.country }}">
         </div>
@@ -26,6 +30,7 @@
         <div class="d-flex justify-content-center align-items-center">
             <button type="submit" class="btn btn-primary col-sm-10 mt-2 mb-5">Update</button>
         </div>
+
     </form>
 </div>
 {% endblock %}
