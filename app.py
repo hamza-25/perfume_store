@@ -2,13 +2,24 @@ from flask import Flask, render_template, request, url_for, redirect, flash
 from flask_sqlalchemy import SQLAlchemy
 from db_info import USER, PASSWORD, DATABASE_NAME
 from flask_migrate import Migrate
+from flask_cors import CORS
+# blueprint register
+from admin_route import admin_page
 
+# app config
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'thisisasecretkeyformyapp'
+# app.register_blueprint(admin_page)
+app.config['SECRET_KEY'] = '44e2168417769a72e6e03174e6b4209841b5d2dd13f89794df8ef2f32a2f4f90'
 app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{USER}:@localhost/{DATABASE_NAME}'
 app.config['UPLOAD_FOLDER'] = 'static/images/uploads/'
+
 db = SQLAlchemy(app)
+
+
 migrate = Migrate(app, db)
+CORS(app)
+
+
 
 from models import Category, Product, Address, Order, User
 from db_operation import *
@@ -25,6 +36,7 @@ def load_user(user_id):
     from models.User import User
     return db.session.query(User).filter_by(id=user_id).first()
 
+
 def is_admin():
     if current_user.is_authenticated:
         from models.User import User
@@ -34,7 +46,6 @@ def is_admin():
         return True
     else:
         False
-    
         
 
 @app.route('/')
