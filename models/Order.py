@@ -11,9 +11,11 @@ class Order(db.Model):
     order_status = db.Column(db.String(30), nullable=False)
     ordered_at = db.Column(db.DateTime, nullable=False)
     payement_method = db.Column(db.String(30), nullable=False)
-    address_id = db.Column(db.Integer, nullable=True)
+    address_id = db.Column(db.Integer, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     user = db.relationship('User', backref=db.backref('orders_user', lazy=True))
+    address_id = db.Column(db.Integer, db.ForeignKey('addresses.id'), nullable=False)
+    
  
 
     

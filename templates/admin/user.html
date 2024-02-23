@@ -28,7 +28,11 @@
             <td>{{ user.updated_at }}</td>
             <td>
                 <button class="btn btn-info">
-                    <a href="#">ban</a>
+                    {% if not user.is_ban %}
+                    <a href="/admin/user/ban/{{ user.id }}">ban</a>
+                    {% else %}
+                    <a href="/admin/user/remove_ban/{{ user.id }}">Remove ban</a>
+                    {% endif %}
                 </button>
                 <button class="btn btn-danger">
                     <a href="/admin/delete/user/{{ user.id }}">delete</a>

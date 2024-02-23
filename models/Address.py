@@ -11,6 +11,8 @@ class Address(db.Model):
     street = db.Column(db.String(128), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     user = db.relationship('User', backref=db.backref('addresses_ref', lazy=True))
+    orders = db.relationship('Order', backref='order_ref', lazy=True)
+    
     
     # def __init__(self, country, state, city, zip, street, user_id):
     #     self.country = country

@@ -30,7 +30,7 @@
                 height="200px">
             <div class="card-body">
                 <a href="/product/{{ product.id }}" style="text-decoration: none;color: black;"><h5 class="card-title">{{ product.title }}</h5></a>
-                <p class="card-text">{{ product.description[:200] }}{{ ' ...' }}</p>
+                <p class="card-text">{{ product.description[:200] }}{{ '...' }}</p>
                 <p class="card-text">${{ product.price }}</p>
                 <!-- <form action="/checkout" method="post">
                     <button class="button-55" role="button">Buy Now</button>

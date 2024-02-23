@@ -4,11 +4,11 @@ from db_info import USER, PASSWORD, DATABASE_NAME
 from flask_migrate import Migrate
 from flask_cors import CORS
 # blueprint register
-from admin_route import admin_page
+# from admin_route import admin_page
 
 # app config
 app = Flask(__name__)
-# app.register_blueprint(admin_page)
+# app.register_blueprint(admin_page, url_prefix='/admin')
 app.config['SECRET_KEY'] = '44e2168417769a72e6e03174e6b4209841b5d2dd13f89794df8ef2f32a2f4f90'
 app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{USER}:@localhost/{DATABASE_NAME}'
 app.config['UPLOAD_FOLDER'] = 'static/images/uploads/'
@@ -47,6 +47,11 @@ def is_admin():
     else:
         False
         
+@app.before_request
+def check_user_ban():
+    if current_user.is_authenticated and current_user.is_ban:
+        logout_user()  # Assuming you're using Flask-Login for user authentication
+        return redirect(url_for('login'))
 
 @app.route('/')
 def home():
@@ -312,6 +317,28 @@ def admin_delete_user(id):
     flash('user deleted successfully', 'successfully')
     return redirect(url_for('user'))
 
+@app.route('/admin/user/ban/<int:id>')
+def ban_user(id):
+    if not is_admin():
+        return 'access denied'
+    from models.User import User
+    user = get_user_by_id(User, db, id)
+    user.is_ban = 1
+    db.session.commit()
+    flash('user banned successfully', 'successfully')
+    return redirect(url_for('user'))
+
+@app.route('/admin/user/remove_ban/<int:id>')
+def remove_ban_user(id):
+    if not is_admin():
+        return 'access denied'
+    from models.User import User
+    user = get_user_by_id(User, db, id)
+    user.is_ban = 0
+    db.session.commit()
+    flash('user ban removed successfully', 'successfully')
+    return redirect(url_for('user'))
+
 
 @app.route('/user_orders')
 @login_required
@@ -349,6 +376,10 @@ def delivered(order_id):
 def checkout():
     if request.method == 'POST':
         quantity = request.form['quantity']
+        # if user forget to set quantity we set to 1 as default
+        if  quantity == '':
+            quantity = 1
+        
         if int(quantity) == 0:
             return redirect(url_for('home'))
         product_id = request.form['product_id']
@@ -363,16 +394,28 @@ def checkout():
 @app.route('/confirm_checkout', methods=['POST'])
 @login_required
 def confirm_checkout():
-    if request.method == 'POST':
+    from form_validator.checkForm import CheckForm
+    form = CheckForm(request.form)
+    if request.method == 'POST' and form.validate():
         address_id = request.form['address']
         user_id = current_user.id
+
+        # check if address belongs to current user
+        valide_address_user = False
+        for address in current_user.addresses:
+            if int(address_id) == int(address.id):
+                valide_address_user = True
+        if not valide_address_user:
+            flash('invalid address please use use valid one')
+            return redirect(f'/profil/{current_user.id}')
+
         total = float(request.form['total'])
         product_id = int(request.form['product_id'])
         from models.Order import Order
         from datetime import datetime
         from random import randint
         transaction = f'{user_id}DFGF{randint(0, 10000)}'
-        new_order = Order(user_id=user_id, transaction=transaction, total_price=total, products_id=product_id, order_status='placed', ordered_at=datetime.now(), payement_method='cash on delivery')
+        new_order = Order(address_id=address_id, user_id=user_id, transaction=transaction, total_price=total, products_id=product_id, order_status='placed', ordered_at=datetime.now(), payement_method='cash on delivery')
         db.session.add(new_order)
         db.session.commit()
         flash('order has successfully placed')
