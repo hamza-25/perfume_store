@@ -100,14 +100,14 @@ WTForms==3.1.2
 - Copy the IP address and paste it into your web browser's address bar.
 - You'll be directed to the homepage of the Perfume Emporium web app.
 - **If you're a regular user, you can:
- - **Browse the collection of perfumes.**
- - **Add items to your cart.**
- - **Proceed to checkout.**
- - **View and manage your orders.**
- - **Edit your profile information.**
+  - **Browse the collection of perfumes.
+  - **Add items to your cart.
+  - **Proceed to checkout.
+  - **View and manage your orders.
+  - **Edit your profile information.
 - **If you want to access the admin features:
- - **Register as a normal user.**
- - **Access MySQL and run the following commands:**
+  - **Register as a normal user.
+  - **Access MySQL and run the following commands:
    ```bash
    USE perfume_db;
    UPDATE users SET is_admin=1 WHERE email='youremail@email.com';
