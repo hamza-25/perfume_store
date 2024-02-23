@@ -84,6 +84,7 @@ def profil(id):
         user.email = email
         user.first_name = fname
         user.last_name = lname
+        user.updated_at = datetime.now()
         db.session.commit()
         flash('profil updated successfully', 'successfully')
         return redirect(f'/profil/{id}')
