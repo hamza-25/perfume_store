@@ -99,13 +99,13 @@ WTForms==3.1.2
 - After running the application, note the local IP address provided in the terminal, e.g., http://127.0.0.1:5000.
 - Copy the IP address and paste it into your web browser's address bar.
 - You'll be directed to the homepage of the Perfume Emporium web app.
-- **If you're a regular user, you can:
+- If you're a regular user, you can:
   - **Browse the collection of perfumes.
   - **Add items to your cart.
   - **Proceed to checkout.
   - **View and manage your orders.
   - **Edit your profile information.
-- **If you want to access the admin features:
+- If you want to access the admin features:
   - **Register as a normal user.
   - **Access MySQL and run the following commands:
    ```bash
