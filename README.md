@@ -37,7 +37,6 @@ Perfume Emporium aims to redefine the fragrance shopping experience by providing
    ```bash
    python3 -m venv per_venv
    source per_venv/bin/activate
-   pip list
 3. Ensure that the following packages are installed:
    ```bash
    pip list
