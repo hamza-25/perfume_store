@@ -15,8 +15,8 @@ class User(db.Model, UserMixin):
     is_ban = db.Column(db.Integer)
     created_at = db.Column(db.DateTime)
     updated_at = db.Column(db.DateTime)
-    addresses = db.relationship('Address', backref='user_ref', lazy=True)
-    orders = db.relationship('Order', backref='user_orders', lazy=True)
+    addresses = db.relationship('Address', backref='user_ref', lazy=True, cascade='all, delete-orphan')
+    orders = db.relationship('Order', backref='user_orders', lazy=True, cascade='all, delete-orphan')
 
 
     # def __init__(self, first_name, last_name, password, confirm_password, email, email_verification):
